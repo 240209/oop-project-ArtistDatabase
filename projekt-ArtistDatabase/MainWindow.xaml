@@ -4,20 +4,11 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:projekt_ArtistDatabase"
+        xmlns:views="clr-namespace:projekt_ArtistDatabase"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
-        <Button Content="artists" Click="Button_Click" Width="50" Height="50"/>
+        Title="Music Artists Database Client" Height="450" Width="800" MinHeight="450" MinWidth="700">
 
-
-        <ItemsControl ItemsSource="{Binding artistFeed}">
-            <ItemsControl.ItemTemplate>
-                <DataTemplate>
-                    <StackPanel>
-                        <TextBlock Text="{Binding Name}" />
-                    </StackPanel>
-                </DataTemplate>
-            </ItemsControl.ItemTemplate>
-        </ItemsControl>
+    <Grid Margin="5 0 5 5">
+        <views:ArtistsView/>
     </Grid>
 </Window>

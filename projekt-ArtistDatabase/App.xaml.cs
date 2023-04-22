@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using projekt_ArtistDatabase.EFCore;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -14,15 +15,39 @@ namespace projekt_ArtistDatabase
     /// </summary>
     public partial class App : Application
     {
+        /// <summary>
+        /// database context variable initialised in OnStartup and disposed in destructor
+        /// </summary>
+        private ArtistContext _context;
         protected override void OnStartup(StartupEventArgs e)
         {
-            MainWindow = new MainWindow();/*
+            // Connection to the database
+            _context = new();
+            _context.Database.Migrate();
+
+            // Sample data fill if database empty
+            if (!_context.Artists.Any())
             {
-                DataContext = new ArtistsViewModel()
-            };*/
+                DatabaseHandler.InsertSampleData(_context);
+            }
+
+            // Show MainWindow, passing DataContext
+            MainWindow = new MainWindow()
+            {
+                DataContext = new ArtistsViewModel(_context)
+            };
+
             MainWindow.Show();
 
             base.OnStartup(e);
+        }
+
+        /// <summary>
+        /// Destructor to close database context
+        /// </summary>
+        ~App()
+        {
+            _context.Dispose();
         }
     }
 }

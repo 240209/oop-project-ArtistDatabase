@@ -15,7 +15,7 @@ namespace projekt_ArtistDatabase.EFCore
         public DbSet<Genre> Genres { get; set; }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=c:\Users\vojte\Můj disk\Documents\00 Skola\VUT\4. semestr\BPC-OOP Objektově orientované programování\cvičení\projekt-ArtistDatabase\projekt-ArtistDatabase\ArtistDatabase.mdf;Integrated Security=True;Connect Timeout=30");
+            optionsBuilder.UseSqlServer(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=c:\Users\vojte\Můj disk\Documents\00 Skola\VUT\4. semestr\BPC-OOP Objektově orientované programování\cvičení\oop-project-ArtistDatabase\projekt-ArtistDatabase\ArtistDatabase.mdf;Integrated Security=True;Connect Timeout=30");
             optionsBuilder.UseLazyLoadingProxies();
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
