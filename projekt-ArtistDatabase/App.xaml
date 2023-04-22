@@ -4,6 +4,16 @@
              xmlns:local="clr-namespace:projekt_ArtistDatabase">
     <Application.Resources>
         <ResourceDictionary>
+            <Style TargetType="Label" x:Key="HeaderLabel">
+                <Setter Property="FontSize" Value="20"/>
+                <Setter Property="FontWeight" Value="DemiBold"/>
+            </Style>
+            
+            <Style TargetType="Label" x:Key="PropertyTitle">
+                <Setter Property="FontSize" Value="14"/>
+                <Setter Property="FontWeight" Value="Bold"/>
+            </Style>
+            
             <Style TargetType="Button">
                 <Setter Property="Background" Value="White"/>
                 <Setter Property="HorizontalAlignment" Value="Center"/>
@@ -24,6 +34,11 @@
                         <Setter Property="BorderBrush" Value="Black"/>
                     </Style>
                 </Style.Resources>
+            </Style>
+
+            <Style TargetType="TextBox" x:Key="UserInput" BasedOn="{StaticResource {x:Type TextBox}}">
+                <Setter Property="FontSize" Value="14"/>
+                <Setter Property="Padding" Value="3"/>
             </Style>
 
             <Style TargetType="TextBlock">

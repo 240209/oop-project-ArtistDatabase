@@ -5,10 +5,35 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:projekt_ArtistDatabase"
         xmlns:views="clr-namespace:projekt_ArtistDatabase"
+        xmlns:vms="clr-namespace:projekt_ArtistDatabase.ViewModels"
+        xmlns:custom="clr-namespace:ModalControl;assembly=ModalControl"
         mc:Ignorable="d"
         Title="Music Artists Database Client" Height="450" Width="800" MinHeight="450" MinWidth="700">
 
-    <Grid Margin="5 0 5 5">
-        <views:ArtistsView/>
+    <Window.Resources>
+        <DataTemplate DataType="{x:Type vms:GenreEditViewModel}">
+            <views:GenreEditView/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vms:ArtistEditViewModel}">
+            <views:ArtistEditView/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vms:ArtistAlbumsEditViewModel}">
+            <views:ArtistAlbumsEditView/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vms:ArtistGenresEditViewModel}">
+            <views:ArtistGenresEditView/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vms:AlbumEditViewModel}">
+            <views:AlbumEditView/>
+        </DataTemplate>
+    </Window.Resources>
+    
+    <Grid>
+        <custom:Modal IsOpen="{Binding IsViewModelOpen}" Panel.ZIndex="1">
+            <ContentControl Content="{Binding CurrentViewModel}"/>
+        </custom:Modal>
+
+
+        <views:ArtistsView Margin="5 0 5 5" DataContext="{Binding ArtistsViewModel}"/>
     </Grid>
 </Window>

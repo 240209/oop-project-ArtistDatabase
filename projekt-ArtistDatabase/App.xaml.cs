@@ -1,5 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using projekt_ArtistDatabase.EFCore;
+using projekt_ArtistDatabase.ViewModels;
+using projekt_ArtistDatabase;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -15,6 +17,11 @@ namespace projekt_ArtistDatabase
     /// </summary>
     public partial class App : Application
     {
+        private readonly NavigationStore _navigationStore;
+        public App()
+        {
+            _navigationStore = new();
+        }
         /// <summary>
         /// database context variable initialised in OnStartup and disposed in destructor
         /// </summary>
@@ -32,9 +39,11 @@ namespace projekt_ArtistDatabase
             }
 
             // Show MainWindow, passing DataContext
+            var artistsViewModel = new ArtistsViewModel(_context);
+
             MainWindow = new MainWindow()
             {
-                DataContext = new ArtistsViewModel(_context)
+                DataContext = new MainViewModel(_navigationStore, artistsViewModel)
             };
 
             MainWindow.Show();

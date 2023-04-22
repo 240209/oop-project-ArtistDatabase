@@ -2,23 +2,25 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using projekt_ArtistDatabase;
 using System.Threading.Tasks;
 using projekt_ArtistDatabase.EFCore;
+using projekt_ArtistDatabase.ViewModels;
 using System.ComponentModel;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
 using System.Windows;
+using projekt_ArtistDatabase;
+using Microsoft.EntityFrameworkCore.Metadata;
 
-namespace projekt_ArtistDatabase
+namespace projekt_ArtistDatabase.ViewModels
 {
-    public class ArtistsViewModel : INotifyPropertyChanged
+    public class ArtistsViewModel : ViewModelBase
     {
         private ObservableCollection<Artist> _artistsOutput;
         public ObservableCollection<Artist> ArtistsOutput
         {
-            get { return _artistsOutput; }
+            get => _artistsOutput;
             set
             {
                 _artistsOutput = value;
@@ -37,15 +39,12 @@ namespace projekt_ArtistDatabase
         private Artist _selectedArtist;
         public Artist SelectedArtist
         {
-            get
-            {
-                return _selectedArtist;
-            }
+            get => _selectedArtist;
             set
             {
                 _selectedArtist = value;
 
-                if(_selectedArtist != null)
+                if (_selectedArtist != null)
                 {
                     if (_selectedArtist.Albums.Any())
                     {
@@ -90,7 +89,7 @@ namespace projekt_ArtistDatabase
                 OnPropertyChanged(nameof(SelectedArtistName));
                 OnPropertyChanged(nameof(hasSelectedArtistAlbums));
             }
-        } 
+        }
         #endregion
 
 
@@ -108,15 +107,6 @@ namespace projekt_ArtistDatabase
             IsArtistSelected = false;
         }
 
-        #region PropertyChanged Handling
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        protected virtual void OnPropertyChanged(string propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        } 
-        #endregion
-
         #region ICommands
         public ICommand SearchArtists { get; }
         public ICommand AddArtist { get; }
@@ -125,7 +115,7 @@ namespace projekt_ArtistDatabase
         public ICommand EditArtistGenres { get; }
         public ICommand EditArtistAlbums { get; }
         public ICommand ImportCsv { get; }
-        public ICommand ExportCsv { get; } 
+        public ICommand ExportCsv { get; }
         #endregion
     }
 }
