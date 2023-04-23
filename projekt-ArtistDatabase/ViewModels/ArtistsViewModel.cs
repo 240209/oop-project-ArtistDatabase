@@ -28,13 +28,13 @@ namespace projekt_ArtistDatabase.ViewModels
             }
         }
 
-
         #region Selected Artist Handling
         public bool IsArtistSelected { get; set; }
         public bool hasSelectedArtistAlbums { get; set; }
+        public bool hasSelectedArtistGenres { get; set; }
         public string SelectedArtistName { get; set; }
-        public string SelectedArtistGenres { get; set; }
         public ObservableCollection<Album> SelectedArtistAlbums { get; set; }
+        public ObservableCollection<Genre> SelectedArtistGenres { get; set; }
 
         private Artist _selectedArtist;
         public Artist SelectedArtist
@@ -60,18 +60,13 @@ namespace projekt_ArtistDatabase.ViewModels
 
                     if (_selectedArtist.Genres.Any())
                     {
-                        StringBuilder artistGenres = new();
-                        foreach (var genre in _selectedArtist.Genres)
-                        {
-                            artistGenres.Append(genre.Name);
-                            artistGenres.Append(", ");
-                        }
-                        artistGenres.Remove(artistGenres.Length - 2, 2);
-                        SelectedArtistGenres = artistGenres.ToString();
+                        SelectedArtistGenres = new ObservableCollection<Genre>(_selectedArtist.Genres);
+                        hasSelectedArtistGenres = true;
                     }
                     else
                     {
-                        SelectedArtistGenres = "Add the first genre!";
+                        SelectedArtistGenres = new ObservableCollection<Genre>();
+                        hasSelectedArtistGenres = false;
                     }
 
                     SelectedArtistName = _selectedArtist.Name;
@@ -88,11 +83,10 @@ namespace projekt_ArtistDatabase.ViewModels
                 OnPropertyChanged(nameof(SelectedArtistGenres));
                 OnPropertyChanged(nameof(SelectedArtistName));
                 OnPropertyChanged(nameof(hasSelectedArtistAlbums));
+                OnPropertyChanged(nameof(hasSelectedArtistGenres));
             }
         }
         #endregion
-
-
 
         /// <summary>
         /// database context variable initialised in constructor and disposed in destructor

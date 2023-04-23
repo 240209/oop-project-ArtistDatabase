@@ -27,27 +27,30 @@ namespace projekt_ArtistDatabase
             var pop = new Genre { Name = "Pop" };
             var punk = new Genre { Name = "Punk" };
 
-            var metallica = new Artist {
+            var metallica = new Artist
+            {
                 Name = "Metallica",
                 Genres = { trash_metal, metal },
-                Albums = 
+                Albums =
                 {
                     new Album { Name = "Kill 'Em All", Year = 1983 },
                     new Album { Name = "Metallica (Black Album)", Year = 1991 },
                 }
             };
-            var olympic = new Artist {
+            var olympic = new Artist
+            {
                 Name = "Olympic",
                 Genres = { rock, pop },
-                Albums = 
+                Albums =
                 {
                     new Album { Name = "Prázdniny na Zemi...?", Year = 1980 }
                 }
             };
-            var avril_lavigne = new Artist { 
+            var avril_lavigne = new Artist
+            {
                 Name = "Avril Lavigne",
                 Genres = { pop, punk },
-                Albums = 
+                Albums =
                 {
                     new Album { Name = "Let Go", Year = 2002 },
                     new Album { Name = "Love Sux", Year = 2022 },
@@ -143,27 +146,27 @@ namespace projekt_ArtistDatabase
                 throw new ArgumentException("Given record doesn't exist in database context.");
             }
 
-            if(oldRecord != null && newRecord != null)
+            if (oldRecord != null && newRecord != null)
             {
-                if(oldRecord is Artist oldArtist && newRecord is Artist newArtist)
+                if (oldRecord is Artist oldArtist && newRecord is Artist newArtist)
                 {
                     oldArtist.Name = newArtist.Name;
 
                     oldArtist.Genres.Clear();
-                    foreach(Genre appGenre in newArtist.Genres)
+                    foreach (Genre appGenre in newArtist.Genres)
                     {
                         oldArtist.Genres.Add(appGenre);
                     }
 
                     oldArtist.Albums.Clear();
-                    foreach(Album appAlbum in newArtist.Albums)
+                    foreach (Album appAlbum in newArtist.Albums)
                     {
                         oldArtist.Albums.Add(appAlbum);
                     }
 
                     return true;
                 }
-                else if(oldRecord is Album oldAlbum && newRecord is Album newAlbum) 
+                else if (oldRecord is Album oldAlbum && newRecord is Album newAlbum)
                 {
                     oldAlbum.Name = newAlbum.Name;
                     oldAlbum.Year = newAlbum.Year;
@@ -172,12 +175,12 @@ namespace projekt_ArtistDatabase
 
                     return true;
                 }
-                else if(oldRecord is Genre oldGenre && newRecord is Genre newGenre) 
+                else if (oldRecord is Genre oldGenre && newRecord is Genre newGenre)
                 {
                     oldGenre.Name = newGenre.Name;
-                    
+
                     oldGenre.Artists.Clear();
-                    foreach(Artist appArtist in newGenre.Artists)
+                    foreach (Artist appArtist in newGenre.Artists)
                     {
                         oldGenre.Artists.Add(appArtist);
                     }
@@ -198,7 +201,7 @@ namespace projekt_ArtistDatabase
         /// <exception cref="ArgumentException">thrown when there is not such entry to be updated</exception>
         static public bool DeleteRecord(object record, ArtistContext context)
         {
-            if(record == null)
+            if (record == null)
             {
                 return false;
             }

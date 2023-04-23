@@ -8,7 +8,7 @@
         xmlns:vms="clr-namespace:projekt_ArtistDatabase.ViewModels"
         xmlns:custom="clr-namespace:ModalControl;assembly=ModalControl"
         mc:Ignorable="d"
-        Title="Music Artists Database Client" Height="450" Width="800" MinHeight="450" MinWidth="700">
+        Title="Music Artists Database Client" Height="450" Width="800" MinHeight="450" MinWidth="800">
 
     <Window.Resources>
         <DataTemplate DataType="{x:Type vms:GenreEditViewModel}">
@@ -17,17 +17,11 @@
         <DataTemplate DataType="{x:Type vms:ArtistEditViewModel}">
             <views:ArtistEditView/>
         </DataTemplate>
-        <DataTemplate DataType="{x:Type vms:ArtistAlbumsEditViewModel}">
-            <views:ArtistAlbumsEditView/>
-        </DataTemplate>
-        <DataTemplate DataType="{x:Type vms:ArtistGenresEditViewModel}">
-            <views:ArtistGenresEditView/>
-        </DataTemplate>
         <DataTemplate DataType="{x:Type vms:AlbumEditViewModel}">
             <views:AlbumEditView/>
         </DataTemplate>
     </Window.Resources>
-    
+
     <Grid>
         <custom:Modal IsOpen="{Binding IsViewModelOpen}" Panel.ZIndex="1">
             <ContentControl Content="{Binding CurrentViewModel}"/>

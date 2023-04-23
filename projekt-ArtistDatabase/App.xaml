@@ -8,12 +8,12 @@
                 <Setter Property="FontSize" Value="20"/>
                 <Setter Property="FontWeight" Value="DemiBold"/>
             </Style>
-            
+
             <Style TargetType="Label" x:Key="PropertyTitle">
                 <Setter Property="FontSize" Value="14"/>
                 <Setter Property="FontWeight" Value="Bold"/>
             </Style>
-            
+
             <Style TargetType="Button">
                 <Setter Property="Background" Value="White"/>
                 <Setter Property="HorizontalAlignment" Value="Center"/>
@@ -45,5 +45,5 @@
                 <Setter Property="Padding" Value="5"/>
             </Style>
         </ResourceDictionary>
-    </Application.Resources> 
+    </Application.Resources>
 </Application>

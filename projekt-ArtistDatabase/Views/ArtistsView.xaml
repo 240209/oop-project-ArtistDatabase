@@ -4,7 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:projekt_ArtistDatabase"
-             mc:Ignorable="d" 
+             mc:Ignorable="d" Background="White"
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
         <Grid.ColumnDefinitions>
@@ -35,15 +35,17 @@
             </Grid>
 
             <Border Grid.Row="1" BorderThickness="2" BorderBrush="Black" Margin="5" CornerRadius="5" Padding="3">
+                <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
 
-                <ListBox ItemsSource="{Binding ArtistsOutput}" BorderThickness="0"
+                    <ListBox ItemsSource="{Binding ArtistsOutput}" BorderThickness="0"
                          SelectedItem="{Binding SelectedArtist}">
-                    <ListBox.ItemTemplate>
-                        <DataTemplate>
-                            <TextBlock Text="{Binding Name}" FontSize="14" Margin="5 2" Padding="5 0"/>
-                        </DataTemplate>
-                    </ListBox.ItemTemplate>
-                </ListBox>
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Name}" FontSize="14" Margin="5 2" Padding="5 0"/>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </ScrollViewer>
             </Border>
         </Grid>
 
@@ -51,91 +53,127 @@
 
 
         <Border Grid.Column="1" Grid.Row="0" BorderThickness="3" BorderBrush="Black" Margin="5" CornerRadius="5">
-            <Grid>
-                <Grid Margin="10">
-                    <Grid.Style>
-                        <Style TargetType="Grid">
-                            <Setter Property="Visibility" Value="Collapsed"/>
-                            <Style.Triggers>
-                                <DataTrigger Binding="{Binding IsArtistSelected}" Value="False">
-                                    <Setter Property="Visibility" Value="Visible"/>
-                                </DataTrigger>
-                            </Style.Triggers>
-                        </Style>
-                    </Grid.Style>
+            <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+                <Grid>
+                    <Grid Margin="10">
+                        <Grid.Style>
+                            <Style TargetType="Grid">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding IsArtistSelected}" Value="False">
+                                        <Setter Property="Visibility" Value="Visible"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Grid.Style>
 
-                    <Label Margin="5 0" Content="Selected artist details will display here." Style="{StaticResource HeaderLabel}"/>
+                        <Label Margin="5 0" Content="Selected artist details will display here." Style="{StaticResource HeaderLabel}"/>
+                    </Grid>
+
+                    <Grid Margin="10 15 10 0">
+                        <Grid.Style>
+                            <Style TargetType="Grid">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding IsArtistSelected}" Value="True">
+                                        <Setter Property="Visibility" Value="Visible"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Grid.Style>
+
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+
+                        <StackPanel Orientation="Horizontal" Grid.Row="1" Margin="3">
+
+                            <Button Content="Edit" Margin="3" Command="{Binding EditArtistName}"/>
+
+                            <TextBlock Text="{Binding SelectedArtistName}" FontWeight="Bold" FontSize="18" VerticalAlignment="Center"/>
+
+                        </StackPanel>
+
+                        <StackPanel Orientation="Vertical" Grid.Row="2" Grid.Column="1" Margin="20 0">
+
+                            <TextBlock Text="Genres:" FontSize="15" VerticalAlignment="Center" Grid.Column="0"/>
+
+                            <StackPanel Orientation="Horizontal" Margin="20 0">
+                                <Button Content="New" Grid.Row="3" Grid.Column="0" Margin="5 0 0 0" Padding="0" VerticalAlignment="Top" Command="{Binding NewArtistGenre}"/>
+                                <Button Content="Edit" Grid.Row="3" Grid.Column="0" Margin="5 0 0 0" Padding="0" VerticalAlignment="Top" Command="{Binding EditArtistGenre}"/>
+                                <Button Content="Remove" Grid.Row="3" Grid.Column="0" Margin="5 0 0 0" Padding="0" VerticalAlignment="Top" Command="{Binding RemoveArtistGenre}"/>
+                            </StackPanel>
+
+                            <Grid Margin="10 10 0 0">
+                                <Grid.Style>
+                                    <Style TargetType="Grid">
+                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding hasSelectedArtistGenres}" Value="False">
+                                                <Setter Property="Visibility" Value="Visible"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Grid.Style>
+
+                                <TextBlock Text="Add the first genre!" FontSize="14" Margin="20 0" Padding="0"/>
+                            </Grid>
+
+                            <ListBox ItemsSource="{Binding SelectedArtistGenres}" BorderThickness="0" Margin="20 5 20 0"
+                                SelectedItem="{Binding SelectedArtistGenre}">
+
+                                <ListBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding Name}" FontSize="14" Margin="0" Padding="0"/>
+                                    </DataTemplate>
+                                </ListBox.ItemTemplate>
+                            </ListBox>
+                        </StackPanel>
+
+
+                        <StackPanel Orientation="Vertical" Grid.Row="3" Grid.Column="1" Margin="20 0">
+
+                            <TextBlock Text="Albums:" FontSize="15" VerticalAlignment="Center" Grid.Column="0"/>
+
+                            <StackPanel Orientation="Horizontal" Margin="20 0">
+                                <Button Content="New" Grid.Row="3" Grid.Column="0" Margin="5 0 0 0" Padding="0" VerticalAlignment="Top" Command="{Binding NewArtistAlbum}"/>
+                                <Button Content="Edit" Grid.Row="3" Grid.Column="0" Margin="5 0 0 0" Padding="0" VerticalAlignment="Top" Command="{Binding EditArtistAlbum}"/>
+                                <Button Content="Remove" Grid.Row="3" Grid.Column="0" Margin="5 0 0 0" Padding="0" VerticalAlignment="Top" Command="{Binding RemoveArtistAlbum}"/>
+                            </StackPanel>
+                            <Grid Margin="10 10 0 0">
+                                <Grid.Style>
+                                    <Style TargetType="Grid">
+                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding hasSelectedArtistAlbums}" Value="False">
+                                                <Setter Property="Visibility" Value="Visible"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Grid.Style>
+
+                                <TextBlock Text="Add the first album!" FontSize="14" Margin="20 0" Padding="0"/>
+                            </Grid>
+
+                            <ListBox BorderThickness="0" Margin="20 5 20 0" ItemsSource="{Binding SelectedArtistAlbums}"
+                                SelectedItem="{Binding SelectedArtistAlbum}">
+                                <ListBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text="{Binding Year}" FontSize="14" Padding="0"/>
+                                            <TextBlock Text=": " FontSize="14" Padding="0"/>
+                                            <TextBlock Text="{Binding Name}" FontSize="14" Padding="0"/>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </ListBox.ItemTemplate>
+                            </ListBox>
+                        </StackPanel>
+                    </Grid>
                 </Grid>
-
-                <Grid Margin="10">
-                    <Grid.Style>
-                        <Style TargetType="Grid">
-                            <Setter Property="Visibility" Value="Collapsed"/>
-                            <Style.Triggers>
-                                <DataTrigger Binding="{Binding IsArtistSelected}" Value="True">
-                                    <Setter Property="Visibility" Value="Visible"/>
-                                </DataTrigger>
-                            </Style.Triggers>
-                        </Style>
-                    </Grid.Style>
-                    
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="auto"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
-
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="auto"/>
-                        <RowDefinition Height="auto"/>
-                        <RowDefinition Height="auto"/>
-                        <RowDefinition Height="*"/>
-                    </Grid.RowDefinitions>
-
-                    <Label Grid.ColumnSpan="2" Grid.Row="0" Content="Artist details:" Style="{StaticResource HeaderLabel}"/>
-
-
-                    <Button Content="Edit" Grid.Row="1" Grid.Column="0" Margin="3" Command="{Binding EditArtistName}"/>
-                    <TextBlock Text="{Binding SelectedArtistName}" FontWeight="Bold" Grid.Row="1" Grid.Column="1" FontSize="18" VerticalAlignment="Center"/>
-
-                    <Button Content="Edit" Grid.Row="2" Grid.Column="0" Margin="3" Command="{Binding EditArtistGenres}"/>
-                    <StackPanel Orientation="Horizontal" Grid.Row="2" Grid.Column="1">
-                        <TextBlock Text="Genres:" FontSize="15" VerticalAlignment="Center"/>
-                        <TextBlock Text="{Binding SelectedArtistGenres}" FontSize="14" VerticalAlignment="Center"/>
-                    </StackPanel>
-
-
-                    <Button Content="Edit" Grid.Row="3" Grid.Column="0" Margin="3" VerticalAlignment="Top" Command="{Binding EditArtistAlbums}"/>
-                    <StackPanel Orientation="Vertical" Grid.Row="3" Grid.Column="1">
-                        <TextBlock Text="Albums:" FontSize="15"/>
-                        <Grid Margin="10">
-                            <Grid.Style>
-                                <Style TargetType="Grid">
-                                    <Setter Property="Visibility" Value="Collapsed"/>
-                                    <Style.Triggers>
-                                        <DataTrigger Binding="{Binding hasSelectedArtistAlbums}" Value="False">
-                                            <Setter Property="Visibility" Value="Visible"/>
-                                        </DataTrigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </Grid.Style>
-
-                            <TextBlock Text="Add the first album!" FontSize="14" Margin="20 0" Padding="0" Foreground="Black"/>
-                        </Grid>
-                        <ListBox BorderThickness="0" Margin="20 0" IsEnabled="False"
-                             ItemsSource="{Binding SelectedArtistAlbums}">
-                            <ListBox.ItemTemplate>
-                                <DataTemplate>
-                                    <StackPanel Orientation="Horizontal">
-                                        <TextBlock Text="{Binding Year}" FontSize="14" Padding="0" Foreground="Black"/>
-                                        <TextBlock Text=": " FontSize="14" Padding="0" Foreground="Black"/>
-                                        <TextBlock Text="{Binding Name}" FontSize="14" Padding="0" Foreground="Black"/>
-                                    </StackPanel>
-                                </DataTemplate>
-                            </ListBox.ItemTemplate>
-                        </ListBox>
-                    </StackPanel>
-                </Grid>
-            </Grid>
+            </ScrollViewer>
         </Border>
 
 
@@ -154,7 +192,7 @@
             <Label Content="Data .csv operation:" FontWeight="Bold"/>
 
             <Button Content="Import from file" Margin="5 0" Command="{Binding ImportCsv}"/>
-            
+
             <Button Content="Export to file" Margin="5 0" Command="{Binding ExportCsv}"/>
         </StackPanel>
     </Grid>
