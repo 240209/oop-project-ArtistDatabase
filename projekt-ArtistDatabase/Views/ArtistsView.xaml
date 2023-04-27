@@ -91,7 +91,7 @@
 
                         <StackPanel Orientation="Horizontal" Grid.Row="1" Margin="3">
 
-                            <Button Content="Edit" Margin="3" Command="{Binding EditArtistName}"/>
+                            <Button Content="Edit" Margin="3" Command="{Binding EditArtistCommand}"/>
 
                             <TextBlock Text="{Binding SelectedArtistName}" FontWeight="Bold" FontSize="18" VerticalAlignment="Center"/>
 
@@ -102,9 +102,9 @@
                             <TextBlock Text="Genres:" FontSize="15" VerticalAlignment="Center" Grid.Column="0"/>
 
                             <StackPanel Orientation="Horizontal" Margin="20 0">
-                                <Button Content="New" Grid.Row="3" Grid.Column="0" Margin="5 0 0 0" Padding="0" VerticalAlignment="Top" Command="{Binding NewArtistGenre}"/>
-                                <Button Content="Edit" Grid.Row="3" Grid.Column="0" Margin="5 0 0 0" Padding="0" VerticalAlignment="Top" Command="{Binding EditArtistGenre}"/>
-                                <Button Content="Remove" Grid.Row="3" Grid.Column="0" Margin="5 0 0 0" Padding="0" VerticalAlignment="Top" Command="{Binding RemoveArtistGenre}"/>
+                                <Button Content="New" Grid.Row="3" Grid.Column="0" Margin="5 0 0 0" Padding="0" VerticalAlignment="Top" Command="{Binding NewArtistGenreCommand}"/>
+                                <Button Content="Edit" Grid.Row="3" Grid.Column="0" Margin="5 0 0 0" Padding="0" VerticalAlignment="Top" Command="{Binding EditArtistGenreCommand}"/>
+                                <Button Content="Remove" Grid.Row="3" Grid.Column="0" Margin="5 0 0 0" Padding="0" VerticalAlignment="Top" Command="{Binding RemoveArtistGenreCommand}"/>
                             </StackPanel>
 
                             <Grid Margin="10 10 0 0">
@@ -139,9 +139,9 @@
                             <TextBlock Text="Albums:" FontSize="15" VerticalAlignment="Center" Grid.Column="0"/>
 
                             <StackPanel Orientation="Horizontal" Margin="20 0">
-                                <Button Content="New" Grid.Row="3" Grid.Column="0" Margin="5 0 0 0" Padding="0" VerticalAlignment="Top" Command="{Binding NewArtistAlbum}"/>
-                                <Button Content="Edit" Grid.Row="3" Grid.Column="0" Margin="5 0 0 0" Padding="0" VerticalAlignment="Top" Command="{Binding EditArtistAlbum}"/>
-                                <Button Content="Remove" Grid.Row="3" Grid.Column="0" Margin="5 0 0 0" Padding="0" VerticalAlignment="Top" Command="{Binding RemoveArtistAlbum}"/>
+                                <Button Content="New" Grid.Row="3" Grid.Column="0" Margin="5 0 0 0" Padding="0" VerticalAlignment="Top" Command="{Binding NewArtistAlbumCommand}"/>
+                                <Button Content="Edit" Grid.Row="3" Grid.Column="0" Margin="5 0 0 0" Padding="0" VerticalAlignment="Top" Command="{Binding EditArtistAlbumCommand}"/>
+                                <Button Content="Remove" Grid.Row="3" Grid.Column="0" Margin="5 0 0 0" Padding="0" VerticalAlignment="Top" Command="{Binding RemoveArtistAlbumCommand}"/>
                             </StackPanel>
                             <Grid Margin="10 10 0 0">
                                 <Grid.Style>
@@ -180,9 +180,9 @@
 
 
         <StackPanel Grid.Row="1" Grid.Column="0" Orientation="Horizontal" HorizontalAlignment="Right" Margin="5">
-            <Button Content="New artist" Command="{Binding AddArtist}"/>
+            <Button Content="New artist" Command="{Binding NewArtistCommand}"/>
 
-            <Button Content="Remove artist" Margin="5 0" Command="{Binding DeleteArtist}"/>
+            <Button Content="Remove artist" Margin="5 0" Command="{Binding RemoveArtistCommand}"/>
         </StackPanel>
 
 
@@ -191,9 +191,9 @@
         <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right" Margin="5">
             <Label Content="Data .csv operation:" FontWeight="Bold"/>
 
-            <Button Content="Import from file" Margin="5 0" Command="{Binding ImportCsv}"/>
+            <Button Content="Import from file" Margin="5 0" Command="{Binding ImportCsvCommand}"/>
 
-            <Button Content="Export to file" Margin="5 0" Command="{Binding ExportCsv}"/>
+            <Button Content="Export to file" Margin="5 0" Command="{Binding ExportCsvCommand}"/>
         </StackPanel>
     </Grid>
 </UserControl>

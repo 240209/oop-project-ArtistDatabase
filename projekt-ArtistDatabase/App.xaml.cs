@@ -39,7 +39,7 @@ namespace projekt_ArtistDatabase
             }
 
             // Show MainWindow, passing DataContext
-            var artistsViewModel = new ArtistsViewModel(_context);
+            var artistsViewModel = new ArtistsViewModel(_context, _navigationStore);
 
             MainWindow = new MainWindow()
             {

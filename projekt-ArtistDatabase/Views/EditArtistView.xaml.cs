@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace projekt_ArtistDatabase
 {
     /// <summary>
-    /// Interaction logic for NewAlbumView.xaml
+    /// Interaction logic for EditArtistView.xaml
     /// </summary>
-    public partial class AlbumEditView : UserControl
+    public partial class EditArtistView : UserControl
     {
-        public AlbumEditView()
+        public EditArtistView()
         {
             InitializeComponent();
         }

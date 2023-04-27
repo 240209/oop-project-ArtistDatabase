@@ -12,6 +12,7 @@ using System.Windows.Input;
 using System.Windows;
 using projekt_ArtistDatabase;
 using Microsoft.EntityFrameworkCore.Metadata;
+using projekt_ArtistDatabase.Commands;
 
 namespace projekt_ArtistDatabase.ViewModels
 {
@@ -93,23 +94,30 @@ namespace projekt_ArtistDatabase.ViewModels
         /// </summary>
         private ArtistContext _context;
 
-        public ArtistsViewModel(ArtistContext context)
+        public ArtistsViewModel(ArtistContext context, NavigationStore navigationStore)
         {
             //_selectedArtist = null;
             _context = context;
             ArtistsOutput = new ObservableCollection<Artist>(_context.Artists.ToList());
             IsArtistSelected = false;
+
+            NewArtistCommand = new OpenAddArtistCommand(navigationStore);
+            EditArtistCommand = new OpenEditArtistCommand(SelectedArtist, navigationStore);
         }
 
         #region ICommands
-        public ICommand SearchArtists { get; }
-        public ICommand AddArtist { get; }
-        public ICommand DeleteArtist { get; }
-        public ICommand EditArtistName { get; }
-        public ICommand EditArtistGenres { get; }
-        public ICommand EditArtistAlbums { get; }
-        public ICommand ImportCsv { get; }
-        public ICommand ExportCsv { get; }
+        public ICommand SearchArtistsCommand { get; }
+        public ICommand NewArtistCommand { get; }
+        public ICommand EditArtistCommand { get; }
+        public ICommand RemoveArtistCommand { get; }
+        public ICommand NewArtistGenreCommand { get; }
+        public ICommand EditArtistGenreCommand { get; }
+        public ICommand RemoveArtistGenreCommand { get; }
+        public ICommand NewArtistAlbumCommand { get; }
+        public ICommand EditArtistAlbumCommand { get; }
+        public ICommand RemoveArtistAlbumCommand { get; }
+        public ICommand ImportCsvCommand { get; }
+        public ICommand ExportCsvCommand { get; }
         #endregion
     }
 }

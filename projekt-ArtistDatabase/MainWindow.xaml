@@ -11,14 +11,23 @@
         Title="Music Artists Database Client" Height="450" Width="800" MinHeight="450" MinWidth="800">
 
     <Window.Resources>
-        <DataTemplate DataType="{x:Type vms:GenreEditViewModel}">
-            <views:GenreEditView/>
+        <DataTemplate DataType="{x:Type vms:EditGenreViewModel}">
+            <views:EditGenreView/>
         </DataTemplate>
-        <DataTemplate DataType="{x:Type vms:ArtistEditViewModel}">
-            <views:ArtistEditView/>
+        <DataTemplate DataType="{x:Type vms:EditArtistViewModel}">
+            <views:EditArtistView/>
         </DataTemplate>
-        <DataTemplate DataType="{x:Type vms:AlbumEditViewModel}">
-            <views:AlbumEditView/>
+        <DataTemplate DataType="{x:Type vms:EditAlbumViewModel}">
+            <views:EditAlbumView/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vms:NewGenreViewModel}">
+            <views:NewGenreView/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vms:NewArtistViewModel}">
+            <views:NewArtistView/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vms:NewAlbumViewModel}">
+            <views:NewAlbumView/>
         </DataTemplate>
     </Window.Resources>
 
