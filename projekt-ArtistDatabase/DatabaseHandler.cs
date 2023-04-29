@@ -18,8 +18,7 @@ namespace projekt_ArtistDatabase
         /// <summary>
         /// Inserts sample data into music artist database
         /// </summary>
-        /// <param name="context">database context</param>
-        static public void InsertSampleData(ArtistContext context)
+        static public void InsertSampleData()
         {
             var trash_metal = new Genre { Name = "Trash Metal" };
             var metal = new Genre { Name = "Metal" };
@@ -76,7 +75,7 @@ namespace projekt_ArtistDatabase
 
             foreach (var record in sampleData)
             {
-                if (!InsertRecord(record, context))
+                if (!InsertRecord(record))
                 {
                     existingRecords.Append("\n");
                     existingRecords.Append(record);
@@ -86,7 +85,7 @@ namespace projekt_ArtistDatabase
 
             existingRecords.Append($"\n\nRecords have not been added to the database.");
 
-            context.SaveChanges();
+            App.context.SaveChanges();
 
             if (showReport)
             {
@@ -103,9 +102,11 @@ namespace projekt_ArtistDatabase
         /// <param name="context">database context</param>
         /// <returns>true if inserted successfuly; false if record already exists</returns>
         /// <exception cref="ArgumentException">Thrown when record doesn't exist in the database but is somehow retyped later to not fit the database</exception>
-        static public bool InsertRecord(object record, ArtistContext context)
+        static public bool InsertRecord(object record)
         {
-            if (!Contains(record, context))
+            ArtistContext context = App.context;
+
+            if (!Contains(record))
             {
                 if (record is Artist artist)
                 {
@@ -136,12 +137,11 @@ namespace projekt_ArtistDatabase
         /// </summary>
         /// <param name="oldRecord">old entry to be updated</param>
         /// <param name="newRecord">updated instance</param>
-        /// <param name="context">database context</param>
         /// <returns>true if updated successfuly; false if one of inputs are null</returns>
         /// <exception cref="ArgumentException">thrown when there is not such entry to be updated</exception>
-        static public bool UpdateRecord(object oldRecord, object newRecord, ArtistContext context)
+        static public bool UpdateRecord(object oldRecord, object newRecord)
         {
-            if (!Contains(oldRecord, context))
+            if (!Contains(oldRecord))
             {
                 throw new ArgumentException("Given record doesn't exist in database context.");
             }
@@ -151,39 +151,18 @@ namespace projekt_ArtistDatabase
                 if (oldRecord is Artist oldArtist && newRecord is Artist newArtist)
                 {
                     oldArtist.Name = newArtist.Name;
-
-                    oldArtist.Genres.Clear();
-                    foreach (Genre appGenre in newArtist.Genres)
-                    {
-                        oldArtist.Genres.Add(appGenre);
-                    }
-
-                    oldArtist.Albums.Clear();
-                    foreach (Album appAlbum in newArtist.Albums)
-                    {
-                        oldArtist.Albums.Add(appAlbum);
-                    }
-
                     return true;
                 }
                 else if (oldRecord is Album oldAlbum && newRecord is Album newAlbum)
                 {
                     oldAlbum.Name = newAlbum.Name;
                     oldAlbum.Year = newAlbum.Year;
-                    oldAlbum.Artist = newAlbum.Artist;
-                    oldAlbum.ArtistId = newAlbum.ArtistId;
 
                     return true;
                 }
                 else if (oldRecord is Genre oldGenre && newRecord is Genre newGenre)
                 {
                     oldGenre.Name = newGenre.Name;
-
-                    oldGenre.Artists.Clear();
-                    foreach (Artist appArtist in newGenre.Artists)
-                    {
-                        oldGenre.Artists.Add(appArtist);
-                    }
 
                     return true;
                 }
@@ -196,21 +175,20 @@ namespace projekt_ArtistDatabase
         /// Deletes record from the database
         /// </summary>
         /// <param name="record">Record to be deleted</param>
-        /// <param name="context">database context</param>
-        /// <returns>true if removed successfuly; false if input is null or cannot remove</returns>
+        /// <returns>removed object from database</returns>
         /// <exception cref="ArgumentException">thrown when there is not such entry to be updated</exception>
-        static public bool DeleteRecord(object record, ArtistContext context)
+        static public object DeleteRecord(object record)
         {
             if (record == null)
             {
                 return false;
             }
-            if (!Contains(record, context))
+            if (!Contains(record))
             {
                 throw new ArgumentException("Given record doesn't exist in database context.");
             }
 
-            return context.Remove(record) == null ? false : true;
+            return App.context.Remove(record);
         }
 
 
@@ -219,11 +197,11 @@ namespace projekt_ArtistDatabase
         /// Method finding matching record in the database
         /// </summary>
         /// <param name="record">record to find the match in the database</param>
-        /// <param name="context">database context</param>
         /// <returns>true if record is in the database, false if not</returns>
         /// <exception cref="ArgumentException">Thrown when record doesn't match any database class.</exception>
-        static private bool Contains(object record, ArtistContext context)
+        static public bool Contains(object record)
         {
+            ArtistContext context = App.context;
             if (record is Artist artist)
             {
                 if (context.Artists.Any(i => i.Name == artist.Name))

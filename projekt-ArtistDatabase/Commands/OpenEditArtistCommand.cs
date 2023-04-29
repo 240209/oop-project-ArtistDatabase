@@ -11,18 +11,23 @@ namespace projekt_ArtistDatabase.Commands
 {
     public class OpenEditArtistCommand : CommandBase
     {
-        private readonly Artist _artist;
+        private readonly ArtistsViewModel _artistsViewModel;
         private readonly NavigationStore _navigationStore;
-        public OpenEditArtistCommand(Artist artist, NavigationStore navigationStore)
+        public OpenEditArtistCommand(ArtistsViewModel artistsViewModel, NavigationStore navigationStore)
         {
-            _artist = artist;
+            _artistsViewModel = artistsViewModel;
             _navigationStore = navigationStore;
-
         }
         public override void Execute(object? parameter)
         {
-            ICommand cancelCommand = new CloseModalCommand(_navigationStore);
-            EditArtistViewModel editArtistViewModel = new(_artist, cancelCommand, null);
+            CloseModalCommand cancelCommand = new(_navigationStore);
+            EditArtistCommand submitCommand = new(_navigationStore);
+
+            EditArtistViewModel editArtistViewModel = new(_artistsViewModel.SelectedArtist, cancelCommand, submitCommand);
+
+            submitCommand.EditArtistViewModel = editArtistViewModel;
+            submitCommand.oldArtist = _artistsViewModel.SelectedArtist;
+
             _navigationStore.CurrentViewModel = editArtistViewModel;
         }
     }

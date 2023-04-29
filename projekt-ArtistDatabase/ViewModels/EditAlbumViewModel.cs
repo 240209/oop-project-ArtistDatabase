@@ -1,4 +1,5 @@
-﻿using System;
+﻿using projekt_ArtistDatabase.EFCore;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -20,8 +21,9 @@ namespace projekt_ArtistDatabase.ViewModels
                 OnPropertyChanged(nameof(Name));
             }
         }
-        private string _year;
-        public string Year
+        private int _year;
+
+        public int Year
         {
             get => _year;
             set
@@ -34,5 +36,13 @@ namespace projekt_ArtistDatabase.ViewModels
         public ICommand CancelCommand { get; }
 
         public ICommand SubmitCommand { get; }
+
+        public EditAlbumViewModel(Album album, ICommand cancelCommand, ICommand submitCommand)
+        {
+            CancelCommand = cancelCommand;
+            SubmitCommand = submitCommand;
+            Name = album.Name;
+            Year = album.Year;
+        }
     }
 }

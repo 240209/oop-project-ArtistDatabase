@@ -7,7 +7,7 @@ using System.Windows.Input;
 
 namespace projekt_ArtistDatabase.ViewModels
 {
-    class NewArtistViewModel : ViewModelBase
+    public class NewArtistViewModel : ViewModelBase
     {
         private string _name;
 

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using projekt_ArtistDatabase.EFCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,7 +8,7 @@ using System.Windows.Input;
 
 namespace projekt_ArtistDatabase.ViewModels
 {
-    class NewGenreViewModel : ViewModelBase
+    public class NewGenreViewModel : ViewModelBase
     {
         private string _name;
         public string Name
@@ -23,5 +24,11 @@ namespace projekt_ArtistDatabase.ViewModels
         public ICommand CancelCommand { get; }
 
         public ICommand SubmitCommand { get; }
+
+        public NewGenreViewModel(ICommand cancelCommand, ICommand submitCommand)
+        {
+            CancelCommand = cancelCommand;
+            SubmitCommand = submitCommand;
+        }
     }
 }

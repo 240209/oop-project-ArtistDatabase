@@ -13,6 +13,8 @@ using System.Windows;
 using projekt_ArtistDatabase;
 using Microsoft.EntityFrameworkCore.Metadata;
 using projekt_ArtistDatabase.Commands;
+using Microsoft.EntityFrameworkCore;
+using System.Collections.Immutable;
 
 namespace projekt_ArtistDatabase.ViewModels
 {
@@ -26,6 +28,26 @@ namespace projekt_ArtistDatabase.ViewModels
             {
                 _artistsOutput = value;
                 OnPropertyChanged(nameof(ArtistsOutput));
+            }
+        }
+
+        private string _searchField;
+        public string SearchField
+        {
+            get => _searchField;
+            set
+            {
+                _searchField = value;
+                if(_searchField != string.Empty)
+                {
+                    ArtistsOutput = new ObservableCollection<Artist>(App.context.Artists.Where(artist => artist.Name.Contains(_searchField)).OrderBy(artist => artist.Name));
+                }
+                else
+                {
+                    ArtistsOutput = new ObservableCollection<Artist>(App.context.Artists.OrderBy(artist => artist.Name));
+                }
+                OnPropertyChanged(nameof(ArtistsOutput));
+                OnPropertyChanged(nameof(SearchField));
             }
         }
 
@@ -49,7 +71,7 @@ namespace projekt_ArtistDatabase.ViewModels
                 {
                     if (_selectedArtist.Albums.Any())
                     {
-                        SelectedArtistAlbums = new ObservableCollection<Album>(_selectedArtist.Albums);
+                        SelectedArtistAlbums = new ObservableCollection<Album>(_selectedArtist.Albums.OrderBy(album => album.Name).OrderBy(album => album.Year));
                         hasSelectedArtistAlbums = true;
                     }
                     else
@@ -61,7 +83,7 @@ namespace projekt_ArtistDatabase.ViewModels
 
                     if (_selectedArtist.Genres.Any())
                     {
-                        SelectedArtistGenres = new ObservableCollection<Genre>(_selectedArtist.Genres);
+                        SelectedArtistGenres = new ObservableCollection<Genre>(_selectedArtist.Genres.OrderBy(genre => genre.Name));
                         hasSelectedArtistGenres = true;
                     }
                     else
@@ -87,6 +109,27 @@ namespace projekt_ArtistDatabase.ViewModels
                 OnPropertyChanged(nameof(hasSelectedArtistGenres));
             }
         }
+
+        private Album _selectedArtistAlbum { get; set; }
+        public Album SelectedArtistAlbum
+        {
+            get => _selectedArtistAlbum;
+            set
+            {
+                _selectedArtistAlbum = value;
+                OnPropertyChanged(nameof(SelectedArtistAlbum));
+            }
+        }
+        private Genre _selectedArtistGenre { get; set; }
+        public Genre SelectedArtistGenre
+        {
+            get => _selectedArtistGenre;
+            set
+            {
+                _selectedArtistGenre = value;
+                OnPropertyChanged(nameof(SelectedArtistGenre));
+            }
+        }
         #endregion
 
         /// <summary>
@@ -96,13 +139,34 @@ namespace projekt_ArtistDatabase.ViewModels
 
         public ArtistsViewModel(ArtistContext context, NavigationStore navigationStore)
         {
-            //_selectedArtist = null;
             _context = context;
-            ArtistsOutput = new ObservableCollection<Artist>(_context.Artists.ToList());
+
+            ArtistsOutput = new ObservableCollection<Artist>(_context.Artists.OrderBy(x => x.Name).ToList());
+
             IsArtistSelected = false;
 
-            NewArtistCommand = new OpenAddArtistCommand(navigationStore);
-            EditArtistCommand = new OpenEditArtistCommand(SelectedArtist, navigationStore);
+            NewArtistCommand = new OpenNewArtistCommand(navigationStore);
+            NewArtistAlbumCommand = new OpenNewAlbumCommand(this, navigationStore);
+            NewArtistGenreCommand = new OpenNewGenreCommand(this, navigationStore);
+
+            EditArtistCommand = new OpenEditArtistCommand(this, navigationStore);
+            EditArtistAlbumCommand = new OpenEditAlbumCommand(this, navigationStore);
+            EditArtistGenreCommand = new OpenEditGenreCommand(this, navigationStore);
+
+            RemoveArtistCommand = new RemoveArtistCommand(this);
+            RemoveArtistAlbumCommand = new RemoveAlbumCommand(this);
+            RemoveArtistGenreCommand = new RemoveGenreCommand(this);
+
+            ExportCsvCommand = new ExportCsvCommand();
+            ImportCsvCommand = new ImportCsvCommand();
+
+            ArtistsOutput.CollectionChanged += RefreshData;
+        }
+
+        public void RefreshData(object sender, EventArgs args)
+        {
+            ArtistsOutput = new ObservableCollection<Artist>(_context.Artists.OrderBy(x => x.Name).ToList());
+            ArtistsOutput.CollectionChanged += RefreshData;
         }
 
         #region ICommands

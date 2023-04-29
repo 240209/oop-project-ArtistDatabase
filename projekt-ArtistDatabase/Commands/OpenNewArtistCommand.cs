@@ -8,18 +8,22 @@ using System.Windows.Input;
 
 namespace projekt_ArtistDatabase.Commands
 {
-    public class OpenAddArtistCommand : CommandBase
+    public class OpenNewArtistCommand : CommandBase
     {
         private readonly NavigationStore _navigationStore;
-        public OpenAddArtistCommand(NavigationStore navigationStore)
+        public OpenNewArtistCommand(NavigationStore navigationStore)
         {
             _navigationStore = navigationStore;
 
         }
         public override void Execute(object? parameter)
         {
-            ICommand cancelCommand = new CloseModalCommand(_navigationStore);
-            NewArtistViewModel newArtistViewModel = new(cancelCommand, null);
+            CloseModalCommand cancelCommand = new(_navigationStore);
+            NewArtistCommand submitCommand = new(_navigationStore);
+
+            NewArtistViewModel newArtistViewModel = new(cancelCommand, submitCommand);
+            submitCommand.NewArtistViewModel = newArtistViewModel;
+
             _navigationStore.CurrentViewModel = newArtistViewModel;
         }
     }

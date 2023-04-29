@@ -1,5 +1,22 @@
 ﻿+ UI
 + Database displayer
-- Commands
-- .csv import / export
-- error handling
++ Commands
++ .csv export
++ .csv import
+- error handling?
+- data validation
+
+
+- cannot edit new album, new genre, new artist
+- cannot add multiple albums
+
+
+
+
+
+
+
+
+
+BUILD RELEASE "ONE FILE"
+dotnet publish -c Release --self-contained -r win-x64 -p:PublishSingleFile=true

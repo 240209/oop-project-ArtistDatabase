@@ -11,8 +11,8 @@ namespace projekt_ArtistDatabase.ViewModels
 {
     public class EditArtistViewModel : ViewModelBase
     {
+        public Artist Artist { get; }
         private string _name;
-
         public string Name
         {
             get => _name;
@@ -31,6 +31,7 @@ namespace projekt_ArtistDatabase.ViewModels
             CancelCommand = cancelCommand;
             SubmitCommand = submitCommand;
             Name = artist.Name;
+            Artist = artist;
         }
     }
 }

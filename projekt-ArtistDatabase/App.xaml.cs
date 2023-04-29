@@ -9,6 +9,7 @@ using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Collections.ObjectModel;
 
 namespace projekt_ArtistDatabase
 {
@@ -18,6 +19,7 @@ namespace projekt_ArtistDatabase
     public partial class App : Application
     {
         private readonly NavigationStore _navigationStore;
+        public static ArtistsViewModel ArtistsViewModel;
         public App()
         {
             _navigationStore = new();
@@ -25,25 +27,57 @@ namespace projekt_ArtistDatabase
         /// <summary>
         /// database context variable initialised in OnStartup and disposed in destructor
         /// </summary>
-        private ArtistContext _context;
+        public static ArtistContext context;
         protected override void OnStartup(StartupEventArgs e)
         {
             // Connection to the database
-            _context = new();
-            _context.Database.Migrate();
+            context = new();
+            context.Database.Migrate();
 
-            // Sample data fill if database empty
-            if (!_context.Artists.Any())
+            // SUBSCRIPTION FOR DATABASE UPDATES
+            context.ChangeTracker.StateChanged += (sender, args) =>
             {
-                DatabaseHandler.InsertSampleData(_context);
-            }
+                if (args.Entry.Entity is Artist changedArtist)
+                {
+                    if (args.Entry.State == EntityState.Added)
+                    {
+                        ArtistsViewModel.ArtistsOutput.Add(changedArtist);
+                        ArtistsViewModel.ArtistsOutput = new ObservableCollection<Artist>(ArtistsViewModel.ArtistsOutput.OrderBy(x => x.Name));
+                    }
+                    else if (args.Entry.State == EntityState.Deleted)
+                    {
+                        ArtistsViewModel.ArtistsOutput.Remove(changedArtist);
+                    }
+                    else if (args.Entry.State == EntityState.Modified)
+                    {
+                        ArtistsViewModel.ArtistsOutput = new ObservableCollection<Artist>(ArtistsViewModel.ArtistsOutput.OrderBy(x => x.Name));
+                        var index = ArtistsViewModel.ArtistsOutput.IndexOf(changedArtist);
+                        if (index >= 0)
+                        {
+                            ArtistsViewModel.ArtistsOutput[index] = changedArtist;
+                            ArtistsViewModel.SelectedArtist = changedArtist;
+                        }
+                    }
+                }
+                else if (args.Entry.Entity is Album album && args.Entry.State == EntityState.Deleted)
+                {
+                    ArtistsViewModel.ArtistsOutput = new ObservableCollection<Artist>(context.Artists.OrderBy(x => x.Name));
+                }
+
+            };
+
+            // Sample data fill if database empty - WE HAVE .csv IMPORT/EXPORT
+            //if (!context.Artists.Any() || !context.Albums.Any() || !context.Genres.Any())
+            //{
+            //    DatabaseHandler.InsertSampleData();
+            //}
 
             // Show MainWindow, passing DataContext
-            var artistsViewModel = new ArtistsViewModel(_context, _navigationStore);
+            ArtistsViewModel = new ArtistsViewModel(context, _navigationStore);
 
             MainWindow = new MainWindow()
             {
-                DataContext = new MainViewModel(_navigationStore, artistsViewModel)
+                DataContext = new MainViewModel(_navigationStore, ArtistsViewModel)
             };
 
             MainWindow.Show();
@@ -56,7 +90,7 @@ namespace projekt_ArtistDatabase
         /// </summary>
         ~App()
         {
-            _context.Dispose();
+            context.Dispose();
         }
     }
 }

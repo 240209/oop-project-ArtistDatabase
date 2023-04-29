@@ -10,7 +10,7 @@ namespace projekt_ArtistDatabase.EFCore
     public class Artist
     {
         [Key]
-        public Guid Id { get; private set; }
+        public Guid Id { get; set; }
 
         [Required]
         public string Name { get; set; }

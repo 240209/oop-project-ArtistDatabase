@@ -5,7 +5,6 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:projekt_ArtistDatabase"
              mc:Ignorable="d" 
-             DataContext="{Binding NewArtistViewModel}"
              d:DesignHeight="100" d:DesignWidth="400">
     <Grid>
         <Grid.RowDefinitions>
