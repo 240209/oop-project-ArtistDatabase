@@ -53,6 +53,8 @@ namespace projekt_ArtistDatabase.ViewModels
 
         #region Selected Artist Handling
         public bool IsArtistSelected { get; set; }
+        public bool IsArtistGenreSelected { get; set; }
+        public bool IsArtistAlbumSelected { get; set; }
         public bool hasSelectedArtistAlbums { get; set; }
         public bool hasSelectedArtistGenres { get; set; }
         public string SelectedArtistName { get; set; }
@@ -117,7 +119,11 @@ namespace projekt_ArtistDatabase.ViewModels
             set
             {
                 _selectedArtistAlbum = value;
+
+                IsArtistAlbumSelected = value != null;
+
                 OnPropertyChanged(nameof(SelectedArtistAlbum));
+                OnPropertyChanged(nameof(IsArtistAlbumSelected));
             }
         }
         private Genre _selectedArtistGenre { get; set; }
@@ -127,7 +133,11 @@ namespace projekt_ArtistDatabase.ViewModels
             set
             {
                 _selectedArtistGenre = value;
+
+                IsArtistGenreSelected = value != null;
+
                 OnPropertyChanged(nameof(SelectedArtistGenre));
+                OnPropertyChanged(nameof(IsArtistGenreSelected));
             }
         }
         #endregion

@@ -1,6 +1,7 @@
 ﻿using projekt_ArtistDatabase.ViewModels;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,26 +11,40 @@ namespace projekt_ArtistDatabase.Commands
 {
     public class RemoveArtistCommand : AsyncCommandBase
     {
-        private readonly ArtistsViewModel _artistViewModel;
+        private readonly ArtistsViewModel _artistsViewModel;
 
         public RemoveArtistCommand(ArtistsViewModel artistsViewModel)
         {
-            _artistViewModel = artistsViewModel;
+            _artistsViewModel = artistsViewModel;
+
+            _artistsViewModel.PropertyChanged += ArtistViewModel_PropertyChanged;
+
         }
 
+        private void ArtistViewModel_PropertyChanged(object? sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == nameof(_artistsViewModel.IsArtistSelected))
+            {
+                OnCanExecuteChanged();
+            }
+        }
         public override async Task ExecuteAsync(object? parameter)
         {
-            var selectedArtist = _artistViewModel.SelectedArtist;
+            var selectedArtist = _artistsViewModel.SelectedArtist;
             if (DatabaseHandler.DeleteRecord(selectedArtist) != null)
             {
                 App.context.SaveChanges();
-                _artistViewModel.ArtistsOutput.Remove(selectedArtist);
+                _artistsViewModel.ArtistsOutput.Remove(selectedArtist);
                 MessageBox.Show("Artist deleted successfuly.");
             }
             else
             {
                 MessageBox.Show("Artist cannot be deleted.");
             }
+        }
+        public override bool CanExecute(object? parameter)
+        {
+            return _artistsViewModel.IsArtistSelected && base.CanExecute(parameter);
         }
     }
 }

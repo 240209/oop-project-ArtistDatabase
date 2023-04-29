@@ -1,6 +1,7 @@
 ﻿using projekt_ArtistDatabase.ViewModels;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,6 +17,16 @@ namespace projekt_ArtistDatabase.Commands
         {
             _artistsViewModel = artistsViewModel;
             _navigationStore = navigationStore;
+
+            _artistsViewModel.PropertyChanged += ArtistViewModel_PropertyChanged;
+        }
+
+        private void ArtistViewModel_PropertyChanged(object? sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == nameof(_artistsViewModel.IsArtistAlbumSelected))
+            {
+                OnCanExecuteChanged();
+            }
         }
         public override void Execute(object? parameter)
         {
@@ -27,6 +38,10 @@ namespace projekt_ArtistDatabase.Commands
             submitCommand.EditAlbumViewModel = editAlbumViewModel;
 
             _navigationStore.CurrentViewModel = editAlbumViewModel;
+        }
+        public override bool CanExecute(object? parameter)
+        {
+            return _artistsViewModel.IsArtistAlbumSelected && base.CanExecute(parameter);
         }
     }
 }
