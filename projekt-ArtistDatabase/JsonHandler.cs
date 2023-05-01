@@ -20,7 +20,6 @@ namespace projekt_ArtistDatabase
 {
     public static class JsonHandler
     {
-        private const string csvFilePath = "ArtistDatabaseExport.csv";
         private class ArtistModel
         {
             public Guid Id { get; set; }
@@ -51,7 +50,7 @@ namespace projekt_ArtistDatabase
             public List<GenreModel> Genres { get; set; }
             public List<ArtistGenreModel> ArtistGenre { get; set; }
         }
-        public static bool Export()
+        public static bool Export(string csvFilePath)
         {
             List<Artist> dbArtists = new(App.context.Artists.ToList());
             List<Album> dbAlbums = new(App.context.Albums.ToList());
@@ -62,7 +61,7 @@ namespace projekt_ArtistDatabase
             List<GenreModel> Genres = new();
             List<ArtistGenreModel> ArtistGenre = new();
 
-            // handeling Artist-Genre, Artist collections
+            // handling Artist-Genre, Artist collections
             foreach (Artist artist in dbArtists)
             {
                 var currentArtist = new ArtistModel
@@ -93,7 +92,7 @@ namespace projekt_ArtistDatabase
                 }
             }
 
-            // handeling Albums
+            // handling Albums
             foreach (Album album in dbAlbums)
             {
                 Albums.Add(new AlbumModel
@@ -105,7 +104,7 @@ namespace projekt_ArtistDatabase
                 });
             }
 
-            // handeling Genres
+            // handling Genres
             foreach (Genre genre in dbGenres)
             {
                 Genres.Add(new GenreModel
@@ -127,7 +126,7 @@ namespace projekt_ArtistDatabase
             File.WriteAllText(csvFilePath, jsonText);
             return true;
         }
-        public static bool Import()
+        public static bool Import(string csvFilePath)
         {
             List<Artist> artists = new();
             List<Album> albums = new();
@@ -187,11 +186,6 @@ namespace projekt_ArtistDatabase
             App.context.Genres.AddRange(genres);
 
             App.context.SaveChanges();
-
-            foreach(var artist in artists)
-            {
-                App.context.Entry(artist).State = EntityState.Added;
-            }
 
             return true;
         }

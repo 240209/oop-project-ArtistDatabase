@@ -7,9 +7,6 @@
 - data validation
 
 
-- cannot add multiple items (generates same GUID)
-
-
 
 
 

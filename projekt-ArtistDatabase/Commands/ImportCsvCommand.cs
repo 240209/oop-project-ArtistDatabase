@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,7 +12,17 @@ namespace projekt_ArtistDatabase.Commands
     {
         public override async Task ExecuteAsync(object? parameter)
         {
-            if (JsonHandler.Import())
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Filter = "CSV files (*.csv)|*.csv"; // file type filter
+            string fileOutputPath = string.Empty;
+
+            if (openFileDialog.ShowDialog() == true)
+            {
+                fileOutputPath = openFileDialog.FileName;
+            }
+
+
+            if (JsonHandler.Import(fileOutputPath))
             {
                 MessageBox.Show("Database imported from ArtistDatabaseExport.csv successfuly.");
             }
