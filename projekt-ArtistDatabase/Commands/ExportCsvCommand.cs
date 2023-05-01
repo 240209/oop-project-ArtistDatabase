@@ -26,6 +26,12 @@ namespace projekt_ArtistDatabase.Commands
                 fileOutputPath = saveFileDialog.FileName;
             }
 
+            if (fileOutputPath == string.Empty)
+            {
+                MessageBox.Show("Export canceled.");
+                return;
+            }
+
             if (JsonHandler.Export(fileOutputPath))
             {
                 MessageBox.Show("Data exported into ArtistDatabaseExport.csv successfuly.");

@@ -21,6 +21,11 @@ namespace projekt_ArtistDatabase.Commands
                 fileOutputPath = openFileDialog.FileName;
             }
 
+            if (fileOutputPath == string.Empty)
+            {
+                MessageBox.Show("Import canceled.");
+                return;
+            }
 
             if (JsonHandler.Import(fileOutputPath))
             {
