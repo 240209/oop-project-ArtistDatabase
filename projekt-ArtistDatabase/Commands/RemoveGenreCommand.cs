@@ -34,9 +34,9 @@ namespace projekt_ArtistDatabase.Commands
             var selectedGenre = _artistsViewModel.SelectedArtistGenre;
             if (DatabaseHandler.DeleteRecord(selectedGenre) != null)
             {
+                MessageBox.Show("Genre deleted successfuly.");
                 App.context.SaveChanges();
                 _artistsViewModel.SelectedArtistGenres.Remove(selectedGenre);
-                MessageBox.Show("Genre deleted successfuly.");
             }
             else
             {

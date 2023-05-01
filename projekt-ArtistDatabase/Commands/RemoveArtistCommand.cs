@@ -33,9 +33,9 @@ namespace projekt_ArtistDatabase.Commands
             var selectedArtist = _artistsViewModel.SelectedArtist;
             if (DatabaseHandler.DeleteRecord(selectedArtist) != null)
             {
+                MessageBox.Show("Artist deleted successfuly.");
                 App.context.SaveChanges();
                 _artistsViewModel.ArtistsOutput.Remove(selectedArtist);
-                MessageBox.Show("Artist deleted successfuly.");
             }
             else
             {

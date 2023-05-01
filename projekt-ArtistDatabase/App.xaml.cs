@@ -39,31 +39,14 @@ namespace projekt_ArtistDatabase
             {
                 if (args.Entry.Entity is Artist changedArtist)
                 {
-                    if (args.Entry.State == EntityState.Added)
-                    {
-                        ArtistsViewModel.ArtistsOutput.Add(changedArtist);
-                        ArtistsViewModel.ArtistsOutput = new ObservableCollection<Artist>(ArtistsViewModel.ArtistsOutput.OrderBy(x => x.Name));
-                    }
-                    else if (args.Entry.State == EntityState.Deleted)
-                    {
-                        ArtistsViewModel.ArtistsOutput.Remove(changedArtist);
-                    }
-                    else if (args.Entry.State == EntityState.Modified)
-                    {
-                        ArtistsViewModel.ArtistsOutput = new ObservableCollection<Artist>(ArtistsViewModel.ArtistsOutput.OrderBy(x => x.Name));
-                        var index = ArtistsViewModel.ArtistsOutput.IndexOf(changedArtist);
-                        if (index >= 0)
-                        {
-                            ArtistsViewModel.ArtistsOutput[index] = changedArtist;
-                            ArtistsViewModel.SelectedArtist = changedArtist;
-                        }
-                    }
-                }
-                else if (args.Entry.Entity is Album album && args.Entry.State == EntityState.Deleted)
-                {
                     ArtistsViewModel.ArtistsOutput = new ObservableCollection<Artist>(context.Artists.OrderBy(x => x.Name));
+                    var index = ArtistsViewModel.ArtistsOutput.IndexOf(changedArtist);
+                    if (index != -1)
+                    {
+                        ArtistsViewModel.ArtistsOutput[index] = changedArtist;
+                        ArtistsViewModel.SelectedArtist = changedArtist;
+                    }
                 }
-
             };
 
             // Sample data fill if database empty - WE HAVE .csv IMPORT/EXPORT

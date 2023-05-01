@@ -30,9 +30,9 @@ namespace projekt_ArtistDatabase.Commands
 
             if (!DatabaseHandler.Contains(genre) && DatabaseHandler.InsertRecord(genre))
             {
+                MessageBox.Show("Genre added succesfully.");
                 _artistToBeUpdated.Genres.Add(genre);
                 App.context.SaveChanges();
-                MessageBox.Show("Genre added succesfully.");
                 App.context.Entry(_artistToBeUpdated).State = EntityState.Modified;
             }
             else if (DatabaseHandler.Contains(genre))

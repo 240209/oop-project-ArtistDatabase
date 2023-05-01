@@ -34,9 +34,9 @@ namespace projekt_ArtistDatabase.Commands
             var selectedAlbum = _artistsViewModel.SelectedArtistAlbum;
             if (DatabaseHandler.DeleteRecord(selectedAlbum) != null)
             {
+                MessageBox.Show("Album deleted successfuly.");
                 App.context.SaveChanges();
                 _artistsViewModel.SelectedArtistAlbums.Remove(selectedAlbum);
-                MessageBox.Show("Album deleted successfuly.");
             }
             else
             {

@@ -30,8 +30,6 @@ namespace projekt_ArtistDatabase.Commands
             {
                 MessageBox.Show("Artist added succesfully.");
                 App.context.SaveChanges();
-
-               // App.context.Entry(artist).State = EntityState.Added;
             }
             else
             {

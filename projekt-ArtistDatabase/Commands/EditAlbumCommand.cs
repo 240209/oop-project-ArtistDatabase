@@ -30,18 +30,18 @@ namespace projekt_ArtistDatabase.Commands
             newAlbum.Name = EditAlbumViewModel.Name;
             newAlbum.Year = EditAlbumViewModel.Year;
 
-            _navigationStore.Close();
-
             if (DatabaseHandler.UpdateRecord(_albumToBeUpdated, newAlbum))
             {
-                App.context.SaveChanges();
                 MessageBox.Show("Album edited succesfully.");
+                App.context.SaveChanges();
                 App.context.Entry(_artistToBeUpdated).State = EntityState.Modified;
             }
             else
             {
                 MessageBox.Show("Album edit failed.");
             }
+
+            _navigationStore.Close();
         }
     }
 }
