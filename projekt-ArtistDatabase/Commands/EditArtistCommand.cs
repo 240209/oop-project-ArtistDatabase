@@ -30,14 +30,7 @@ namespace projekt_ArtistDatabase.Commands
             if (DatabaseHandler.UpdateRecord(oldArtist, newArtist))
             {
                 MessageBox.Show("Artist updated succesfully.");
-                try
-                {
-                    App.context.SaveChanges();
-                }
-                catch   (Exception ex)
-                {
-                    MessageBox.Show(ex.Message);
-                }
+                App.context.SaveChanges();
             }
             else
             {

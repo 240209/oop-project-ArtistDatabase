@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml;
 
 namespace projekt_ArtistDatabase.EFCore
 {
@@ -27,6 +28,10 @@ namespace projekt_ArtistDatabase.EFCore
                 .HasKey(a => a.Id);
 
             modelBuilder.Entity<Artist>()
+                .Property(e => e.Id)
+                .HasDefaultValueSql("NEWID()");
+
+            modelBuilder.Entity<Artist>()
                 .Property(a => a.Name)
                 .IsRequired();
 
@@ -44,6 +49,10 @@ namespace projekt_ArtistDatabase.EFCore
                 .HasKey(al => al.Id);
 
             modelBuilder.Entity<Album>()
+                .Property(e => e.Id)
+                .HasDefaultValueSql("NEWID()");
+
+            modelBuilder.Entity<Album>()
                 .Property(al => al.Name)
                 .IsRequired();
 
@@ -54,6 +63,10 @@ namespace projekt_ArtistDatabase.EFCore
             // Genre table
             modelBuilder.Entity<Genre>()
                 .HasKey(g => g.Id);
+
+            modelBuilder.Entity<Genre>()
+                .Property(e => e.Id)
+                .HasDefaultValueSql("NEWID()");
 
             modelBuilder.Entity<Genre>()
                 .Property(g => g.Name)

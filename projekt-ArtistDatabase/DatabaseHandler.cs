@@ -1,5 +1,6 @@
 ﻿using Azure.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Conventions;
 using projekt_ArtistDatabase.EFCore;
 using System;
 using System.Collections.Generic;
@@ -110,14 +111,17 @@ namespace projekt_ArtistDatabase
             {
                 if (record is Artist artist)
                 {
+                    artist.Id = Guid.NewGuid();
                     context.Artists.Add(artist);
                 }
                 else if (record is Album album)
                 {
+                    album.Id = Guid.NewGuid();
                     context.Albums.Add(album);
                 }
                 else if (record is Genre genre)
                 {
+                    genre.Id = Guid.NewGuid();
                     context.Genres.Add(genre);
                 }
                 else
@@ -150,19 +154,26 @@ namespace projekt_ArtistDatabase
             {
                 if (oldRecord is Artist oldArtist && newRecord is Artist newArtist)
                 {
-                    oldArtist.Name = newArtist.Name;
+                    var update = App.context.Artists.Find(oldArtist.Id);
+                    update.Name = newArtist.Name;
+                    App.context.Artists.Update(update);
+
                     return true;
                 }
                 else if (oldRecord is Album oldAlbum && newRecord is Album newAlbum)
                 {
-                    oldAlbum.Name = newAlbum.Name;
-                    oldAlbum.Year = newAlbum.Year;
+                    var update = App.context.Albums.Find(oldAlbum.Id);
+                    update.Name = newAlbum.Name;
+                    update.Year = newAlbum.Year;
+                    App.context.Albums.Update(update);
 
                     return true;
                 }
                 else if (oldRecord is Genre oldGenre && newRecord is Genre newGenre)
                 {
-                    oldGenre.Name = newGenre.Name;
+                    var update = App.context.Genres.Find(oldGenre.Id);
+                    update.Name = newGenre.Name;
+                    App.context.Genres.Update(update);
 
                     return true;
                 }

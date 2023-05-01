@@ -7,8 +7,7 @@
 - data validation
 
 
-- cannot edit new album, new genre, new artist
-- cannot add multiple albums
+- cannot add multiple items (generates same GUID)
 
 
 
