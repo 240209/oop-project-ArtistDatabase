@@ -25,6 +25,12 @@ namespace projekt_ArtistDatabase.ViewModels
         public ICommand CancelCommand { get; }
 
         public ICommand SubmitCommand { get; }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="genre">Reference to the genre to be edited (Id not required)</param>
+        /// <param name="cancelCommand"></param>
+        /// <param name="submitCommand"></param>
         public EditGenreViewModel(Genre genre, ICommand cancelCommand, ICommand submitCommand)
         {
             Name = genre.Name;

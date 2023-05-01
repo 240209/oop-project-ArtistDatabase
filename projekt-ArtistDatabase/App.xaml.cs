@@ -18,7 +18,9 @@ namespace projekt_ArtistDatabase
     /// </summary>
     public partial class App : Application
     {
+        // modal navigation store
         private readonly NavigationStore _navigationStore;
+        // viewModel for the main app view - passing database context in
         public static ArtistsViewModel ArtistsViewModel;
         public App()
         {
@@ -34,7 +36,7 @@ namespace projekt_ArtistDatabase
             context = new();
             context.Database.Migrate();
 
-            // SUBSCRIPTION FOR DATABASE UPDATES
+            // SUBSCRIPTION FOR DATABASE UPDATES TO DYNAMICALLY UPDATE UI
             context.ChangeTracker.StateChanged += (sender, args) =>
             {
                 if (args.Entry.Entity is Artist changedArtist)
@@ -69,7 +71,7 @@ namespace projekt_ArtistDatabase
         }
 
         /// <summary>
-        /// Destructor to close database context
+        /// Destructor to close the database context
         /// </summary>
         ~App()
         {

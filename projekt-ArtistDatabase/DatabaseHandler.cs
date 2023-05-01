@@ -100,7 +100,6 @@ namespace projekt_ArtistDatabase
         /// Inserts a record passed as parameter to the database if not existing already
         /// </summary>
         /// <param name="record">the record to be added to the database</param>
-        /// <param name="context">database context</param>
         /// <returns>true if inserted successfuly; false if record already exists</returns>
         /// <exception cref="ArgumentException">Thrown when record doesn't exist in the database but is somehow retyped later to not fit the database</exception>
         static public bool InsertRecord(object record)

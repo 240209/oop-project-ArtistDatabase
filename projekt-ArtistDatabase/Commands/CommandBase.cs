@@ -7,6 +7,7 @@ using System.Windows.Input;
 
 namespace projekt_ArtistDatabase.Commands
 {
+    // Base default class for commands
     public abstract class CommandBase : ICommand
     {
         public event EventHandler? CanExecuteChanged;

@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace projekt_ArtistDatabase
 {
+    /// <summary>
+    /// Handles operation with modals - displaying, closing, tracking.
+    /// </summary>
     public class NavigationStore
     {
         private ViewModelBase _currentViewModel;
@@ -24,7 +27,9 @@ namespace projekt_ArtistDatabase
         public bool IsOpen => CurrentViewModel != null;
 
         public event Action CurrentViewModelChanged;
-
+        /// <summary>
+        /// Closes current modal
+        /// </summary>
         public void Close()
         {
             CurrentViewModel = null;

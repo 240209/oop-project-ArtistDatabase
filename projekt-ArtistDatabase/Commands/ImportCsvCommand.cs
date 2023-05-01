@@ -12,8 +12,9 @@ namespace projekt_ArtistDatabase.Commands
     {
         public override async Task ExecuteAsync(object? parameter)
         {
+            // getting the input file
             OpenFileDialog openFileDialog = new OpenFileDialog();
-            openFileDialog.Filter = "CSV files (*.csv)|*.csv"; // file type filter
+            openFileDialog.Filter = "CSV files (*.csv)|*.csv";
             string fileOutputPath = string.Empty;
 
             if (openFileDialog.ShowDialog() == true)
@@ -21,6 +22,7 @@ namespace projekt_ArtistDatabase.Commands
                 fileOutputPath = openFileDialog.FileName;
             }
 
+            // if cancelled
             if (fileOutputPath == string.Empty)
             {
                 MessageBox.Show("Import canceled.");
@@ -29,7 +31,7 @@ namespace projekt_ArtistDatabase.Commands
 
             if (JsonHandler.Import(fileOutputPath))
             {
-                MessageBox.Show("Database imported from ArtistDatabaseExport.csv successfuly.");
+                MessageBox.Show("Database imported from .csv file successfuly.");
             }
             else
             {

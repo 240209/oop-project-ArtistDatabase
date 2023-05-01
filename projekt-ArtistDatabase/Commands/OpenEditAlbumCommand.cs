@@ -18,13 +18,16 @@ namespace projekt_ArtistDatabase.Commands
             _artistsViewModel = artistsViewModel;
             _navigationStore = navigationStore;
 
+            // subscribing to the artistsviewmodel property change to enable the EditAlbum command
             _artistsViewModel.PropertyChanged += ArtistViewModel_PropertyChanged;
         }
 
         private void ArtistViewModel_PropertyChanged(object? sender, PropertyChangedEventArgs e)
         {
+            // check if the changed property is IsArtistAlbumSelected
             if (e.PropertyName == nameof(_artistsViewModel.IsArtistAlbumSelected))
             {
+                // then change the CanExecute to true
                 OnCanExecuteChanged();
             }
         }

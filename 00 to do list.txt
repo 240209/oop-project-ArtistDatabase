@@ -3,9 +3,10 @@
 + Commands
 + .csv export
 + .csv import
-- error handling?
++ documentation
 - data validation
 - sample database
+- error handling?
 
 
 

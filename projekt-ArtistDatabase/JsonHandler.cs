@@ -20,6 +20,9 @@ namespace projekt_ArtistDatabase
 {
     public static class JsonHandler
     {
+        #region Simple database models
+        // defines the JSON fields to export / import
+        // redundant data from database are not exported
         private class ArtistModel
         {
             public Guid Id { get; set; }
@@ -38,11 +41,15 @@ namespace projekt_ArtistDatabase
             public Guid Id { get; set; }
             public string Name { get; set; }
         }
+        #endregion
         private class ArtistGenreModel
         {
             public Guid ArtistId { get; set; }
             public Guid GenreId { get; set; }
         }
+        /// <summary>
+        /// Database model for .json parsing
+        /// </summary>
         private class JsonExportFormat
         {
             public List<ArtistModel> Artists { get; set; }
@@ -50,6 +57,11 @@ namespace projekt_ArtistDatabase
             public List<GenreModel> Genres { get; set; }
             public List<ArtistGenreModel> ArtistGenre { get; set; }
         }
+        /// <summary>
+        /// Exports currently used database into a single .csv file in JSON format
+        /// </summary>
+        /// <param name="csvFilePath">path to the .csv file</param>
+        /// <returns>true if successfuly exported</returns>
         public static bool Export(string csvFilePath)
         {
             List<Artist> dbArtists = new(App.context.Artists.ToList());
@@ -126,6 +138,11 @@ namespace projekt_ArtistDatabase
             File.WriteAllText(csvFilePath, jsonText);
             return true;
         }
+        /// <summary>
+        /// Imports database data from a single .csv file in JSON format (deletes all current unexported data)
+        /// </summary>
+        /// <param name="csvFilePath">path to the .csv file</param>
+        /// <returns>true if successfuly imported</returns>
         public static bool Import(string csvFilePath)
         {
             List<Artist> artists = new();

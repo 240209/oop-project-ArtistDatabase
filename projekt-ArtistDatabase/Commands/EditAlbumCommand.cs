@@ -34,6 +34,7 @@ namespace projekt_ArtistDatabase.Commands
             {
                 MessageBox.Show("Album edited succesfully.");
                 App.context.SaveChanges();
+                // notifying UI that the artist has to be refreshed
                 App.context.Entry(_artistToBeUpdated).State = EntityState.Modified;
             }
             else

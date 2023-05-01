@@ -16,9 +16,11 @@ namespace projekt_ArtistDatabase.Commands
     {
         public override async Task ExecuteAsync(object? parameter)
         {
+            // getting the output file
             SaveFileDialog saveFileDialog = new SaveFileDialog();
-            saveFileDialog.Filter = "CSV files (*.csv)|*.csv"; // Set file type filter
-            saveFileDialog.FileName = "ArtistDatabaseExport.csv"; // Set default filename
+            saveFileDialog.Filter = "CSV files (*.csv)|*.csv";
+            // default filename
+            saveFileDialog.FileName = "ArtistDatabaseExport.csv";
             string fileOutputPath = string.Empty;
 
             if (saveFileDialog.ShowDialog() == true)
@@ -26,6 +28,7 @@ namespace projekt_ArtistDatabase.Commands
                 fileOutputPath = saveFileDialog.FileName;
             }
 
+            // if cancelled
             if (fileOutputPath == string.Empty)
             {
                 MessageBox.Show("Export canceled.");
@@ -34,7 +37,7 @@ namespace projekt_ArtistDatabase.Commands
 
             if (JsonHandler.Export(fileOutputPath))
             {
-                MessageBox.Show("Data exported into ArtistDatabaseExport.csv successfuly.");
+                MessageBox.Show("Data exported into .csv file successfuly.");
             }
             else
             {

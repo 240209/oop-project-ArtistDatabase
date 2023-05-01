@@ -30,15 +30,19 @@ namespace projekt_ArtistDatabase.Commands
 
             if (!DatabaseHandler.Contains(genre) && DatabaseHandler.InsertRecord(genre))
             {
+                // if genre doesn't yet exist
                 MessageBox.Show("Genre added succesfully.");
                 _artistToBeUpdated.Genres.Add(genre);
                 App.context.SaveChanges();
+                // notifying UI that the artist has to be refreshed
                 App.context.Entry(_artistToBeUpdated).State = EntityState.Modified;
             }
             else if (DatabaseHandler.Contains(genre))
             {
+                // if genre exists already, it links the existing genre instead of creating the same one
                 _artistToBeUpdated.Genres.Add(App.context.Genres.Where(i => i.Name == genre.Name).First());
                 App.context.SaveChanges();
+                // notifying UI that the artist has to be refreshed
                 App.context.Entry(_artistToBeUpdated).State = EntityState.Modified;
                 MessageBox.Show("New genre linked to existing genre with the same name.");
             }

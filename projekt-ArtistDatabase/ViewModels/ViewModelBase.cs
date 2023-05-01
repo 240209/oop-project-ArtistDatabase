@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace projekt_ArtistDatabase.ViewModels
 {
+    /// <summary>
+    /// Base class to implement INotifyPropertyChanged namespace - extends all the other ViewModels
+    /// </summary>
     public class ViewModelBase : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
@@ -15,7 +18,6 @@ namespace projekt_ArtistDatabase.ViewModels
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
-
         protected virtual void Dispose() { }
     }
 }

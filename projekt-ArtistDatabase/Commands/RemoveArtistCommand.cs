@@ -17,14 +17,17 @@ namespace projekt_ArtistDatabase.Commands
         {
             _artistsViewModel = artistsViewModel;
 
+            // subscribing to the artistsviewmodel property change to enable the RemoveArtist command
             _artistsViewModel.PropertyChanged += ArtistViewModel_PropertyChanged;
 
         }
 
         private void ArtistViewModel_PropertyChanged(object? sender, PropertyChangedEventArgs e)
         {
+            // check if the changed property is IsArtistSelected
             if (e.PropertyName == nameof(_artistsViewModel.IsArtistSelected))
             {
+                // then change the CanExecute to true
                 OnCanExecuteChanged();
             }
         }
@@ -35,6 +38,7 @@ namespace projekt_ArtistDatabase.Commands
             {
                 MessageBox.Show("Artist deleted successfuly.");
                 App.context.SaveChanges();
+                // Remove removed artist from UI
                 _artistsViewModel.ArtistsOutput.Remove(selectedArtist);
             }
             else
