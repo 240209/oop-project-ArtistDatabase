@@ -21,6 +21,7 @@ namespace projekt_ArtistDatabase.EFCore
         public Genre()
         {
             Artists = new List<Artist>();
+            Id = Guid.NewGuid();
         }
     }
 }

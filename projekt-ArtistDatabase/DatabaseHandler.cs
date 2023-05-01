@@ -126,7 +126,7 @@ namespace projekt_ArtistDatabase
                 }
                 else
                 {
-                    throw new ArgumentException("Unknown error");
+                    throw new ArgumentException("Cannot insert argumented type.");
                 }
                 return true;
             }

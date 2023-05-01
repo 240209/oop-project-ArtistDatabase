@@ -21,5 +21,9 @@ namespace projekt_ArtistDatabase.EFCore
         [Required]
         public Guid ArtistId { get; set; }
         public virtual Artist Artist { get; set; }
+        public Album()
+        {
+            Id = Guid.NewGuid();
+        }
     }
 }

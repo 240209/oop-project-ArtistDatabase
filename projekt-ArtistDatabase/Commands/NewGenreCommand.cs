@@ -33,7 +33,6 @@ namespace projekt_ArtistDatabase.Commands
                 _artistToBeUpdated.Genres.Add(genre);
                 App.context.SaveChanges();
                 MessageBox.Show("Genre added succesfully.");
-                App.context.Entry(genre).State = EntityState.Added;
                 App.context.Entry(_artistToBeUpdated).State = EntityState.Modified;
             }
             else if (DatabaseHandler.Contains(genre))

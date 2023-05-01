@@ -22,6 +22,7 @@ namespace projekt_ArtistDatabase.EFCore
         {
             Genres = new List<Genre>();
             Albums = new List<Album>();
+            Id = Guid.NewGuid();
         }
     }
 }

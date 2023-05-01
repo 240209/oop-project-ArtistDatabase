@@ -35,7 +35,6 @@ namespace projekt_ArtistDatabase.Commands
                 MessageBox.Show("Album added succesfully.");
                 App.context.SaveChanges();
                 App.context.Entry(_artistToBeUpdated).State = EntityState.Modified;
-                App.context.Entry(newAlbum).State = EntityState.Added;
             }
             else
             {
