@@ -4,6 +4,7 @@ using projekt_ArtistDatabase.EFCore;
 using projekt_ArtistDatabase.ViewModels;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,9 +17,22 @@ namespace projekt_ArtistDatabase.Commands
         private readonly NavigationStore _navigationStore;
         public NewArtistViewModel NewArtistViewModel;
 
+        private bool _dataValidated;
+        public bool dataValidated
+        {
+            get => _dataValidated;
+            set
+            {
+                _dataValidated = value;
+                OnCanExecuteChanged();
+            }
+        }
+
         public NewArtistCommand(NavigationStore navigationStore)
         {
             _navigationStore = navigationStore;
+            dataValidated = false;
+            OnCanExecuteChanged();
         }
 
         public override async Task ExecuteAsync(object? parameter)
@@ -37,8 +51,19 @@ namespace projekt_ArtistDatabase.Commands
                 return;
             }
 
-
             _navigationStore.Close();
+        }
+        public override bool CanExecute(object? parameter)
+        {
+            return dataValidated && base.CanExecute(parameter);
+        }
+
+        public void validateData(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == nameof(NewArtistViewModel.Name))
+            {
+                dataValidated = NewArtistViewModel.Name != string.Empty;
+            }
         }
     }
 }

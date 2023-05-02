@@ -24,6 +24,8 @@ namespace projekt_ArtistDatabase.Commands
             NewAlbumCommand submitCommand = new(_artistsViewModel.SelectedArtist, _navigationStore);
             NewAlbumViewModel newAlbumViewModel = new(cancelCommand, submitCommand);
 
+            newAlbumViewModel.PropertyChanged += submitCommand.validateData;
+
             submitCommand.NewAlbumViewModel = newAlbumViewModel;
 
             _navigationStore.CurrentViewModel = newAlbumViewModel;

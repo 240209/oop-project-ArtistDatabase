@@ -23,6 +23,8 @@ namespace projekt_ArtistDatabase.Commands
             NewGenreCommand submitCommand = new(_artistsViewModel.SelectedArtist, _navigationStore);
             NewGenreViewModel newGenreViewModel = new(cancelCommand, submitCommand);
 
+            newGenreViewModel.PropertyChanged += submitCommand.validateData;
+
             submitCommand.NewGenreViewModel = newGenreViewModel;
 
             _navigationStore.CurrentViewModel = newGenreViewModel;

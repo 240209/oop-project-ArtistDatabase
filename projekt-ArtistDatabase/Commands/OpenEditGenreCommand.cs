@@ -38,7 +38,9 @@ namespace projekt_ArtistDatabase.Commands
 
             EditGenreViewModel editGenreViewModel = new(_artistsViewModel.SelectedArtistGenre, cancelCommand, submitCommand);
 
-            submitCommand.EditGenreViewModel = editGenreViewModel;
+            submitCommand.editGenreViewModel = editGenreViewModel;
+
+            editGenreViewModel.PropertyChanged += submitCommand.validateData;
 
             _navigationStore.CurrentViewModel = editGenreViewModel;
         }

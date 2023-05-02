@@ -28,6 +28,8 @@ namespace projekt_ArtistDatabase.Commands
             submitCommand.EditArtistViewModel = editArtistViewModel;
             submitCommand.oldArtist = _artistsViewModel.SelectedArtist;
 
+            editArtistViewModel.PropertyChanged += submitCommand.validateData;
+
             _navigationStore.CurrentViewModel = editArtistViewModel;
         }
     }

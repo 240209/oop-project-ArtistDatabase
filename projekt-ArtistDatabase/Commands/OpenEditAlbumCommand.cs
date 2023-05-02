@@ -40,6 +40,8 @@ namespace projekt_ArtistDatabase.Commands
 
             submitCommand.EditAlbumViewModel = editAlbumViewModel;
 
+            editAlbumViewModel.PropertyChanged += submitCommand.validateData;
+
             _navigationStore.CurrentViewModel = editAlbumViewModel;
         }
         public override bool CanExecute(object? parameter)

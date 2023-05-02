@@ -14,7 +14,6 @@ namespace projekt_ArtistDatabase.Commands
         public OpenNewArtistCommand(NavigationStore navigationStore)
         {
             _navigationStore = navigationStore;
-
         }
         public override void Execute(object? parameter)
         {
@@ -23,6 +22,8 @@ namespace projekt_ArtistDatabase.Commands
 
             NewArtistViewModel newArtistViewModel = new(cancelCommand, submitCommand);
             submitCommand.NewArtistViewModel = newArtistViewModel;
+            submitCommand.NewArtistViewModel = newArtistViewModel;
+            newArtistViewModel.PropertyChanged += submitCommand.validateData;
 
             _navigationStore.CurrentViewModel = newArtistViewModel;
         }

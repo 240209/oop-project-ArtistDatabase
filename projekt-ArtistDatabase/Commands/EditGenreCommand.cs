@@ -3,6 +3,7 @@ using projekt_ArtistDatabase.EFCore;
 using projekt_ArtistDatabase.ViewModels;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,21 +14,34 @@ namespace projekt_ArtistDatabase.Commands
     public class EditGenreCommand : AsyncCommandBase
     {
         private readonly NavigationStore _navigationStore;
-        public EditGenreViewModel EditGenreViewModel;
+        public EditGenreViewModel editGenreViewModel;
         private readonly Artist _artistToBeUpdated;
         private readonly Genre _genreToBeUpdated;
+
+        private bool _dataValidated;
+        public bool dataValidated
+        {
+            get => _dataValidated;
+            set
+            {
+                _dataValidated = value;
+                OnCanExecuteChanged();
+            }
+        }
 
         public EditGenreCommand(Artist updatedArtist, Genre updatedGenre , NavigationStore navigationStore)
         {
             _navigationStore = navigationStore;
             _artistToBeUpdated = updatedArtist;
             _genreToBeUpdated = updatedGenre;
+            dataValidated = true;
+            OnCanExecuteChanged();
         }
 
         public override async Task ExecuteAsync(object? parameter)
         {
             Genre newGenre = new();
-            newGenre.Name = EditGenreViewModel.Name;
+            newGenre.Name = editGenreViewModel.Name;
 
             _navigationStore.Close();
 
@@ -41,6 +55,18 @@ namespace projekt_ArtistDatabase.Commands
             else
             {
                 MessageBox.Show("Genre edit failed.");
+            }
+        }
+        public override bool CanExecute(object? parameter)
+        {
+            return dataValidated && base.CanExecute(parameter);
+        }
+
+        public void validateData(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == nameof(editGenreViewModel.Name))
+            {
+                dataValidated = editGenreViewModel.Name != string.Empty;
             }
         }
     }

@@ -34,9 +34,9 @@
 
 
         <Label Content="Year:" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" Style="{StaticResource PropertyTitle}"/>
-        <TextBox Text="{Binding Year}" Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" Style="{StaticResource UserInput}"/>
+        <TextBox Text="{Binding Year, UpdateSourceTrigger=PropertyChanged}" Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" Style="{StaticResource UserInput}"/>
 
         <Label Content="Name:" Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" Style="{StaticResource PropertyTitle}"/>
-        <TextBox Text="{Binding Name}" Grid.Row="2" Grid.Column="1" VerticalAlignment="Center" Style="{StaticResource UserInput}"/>
+        <TextBox Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}" Grid.Row="2" Grid.Column="1" VerticalAlignment="Center" Style="{StaticResource UserInput}"/>
     </Grid>
 </UserControl>

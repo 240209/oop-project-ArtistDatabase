@@ -3,6 +3,7 @@ using projekt_ArtistDatabase.EFCore;
 using projekt_ArtistDatabase.ViewModels;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -17,11 +18,24 @@ namespace projekt_ArtistDatabase.Commands
         private readonly Artist _artistToBeUpdated;
         private readonly Album _albumToBeUpdated;
 
+        private bool _dataValidated;
+        public bool dataValidated
+        {
+            get => _dataValidated;
+            set
+            {
+                _dataValidated = value;
+                OnCanExecuteChanged();
+            }
+        }
+
         public EditAlbumCommand(Artist updatedArtist, Album updatedAlbum, NavigationStore navigationStore)
         {
             _navigationStore = navigationStore;
             _artistToBeUpdated = updatedArtist;
             _albumToBeUpdated = updatedAlbum;
+            dataValidated = true;
+            OnCanExecuteChanged();
         }
 
         public override async Task ExecuteAsync(object? parameter)
@@ -43,6 +57,27 @@ namespace projekt_ArtistDatabase.Commands
             }
 
             _navigationStore.Close();
+        }
+        public override bool CanExecute(object? parameter)
+        {
+            return dataValidated && base.CanExecute(parameter);
+        }
+
+        public void validateData(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == nameof(EditAlbumViewModel.Name) || e.PropertyName == nameof(EditAlbumViewModel.Year))
+            {
+                if (EditAlbumViewModel.Year > 0
+                    && EditAlbumViewModel.Year < 2100
+                    && EditAlbumViewModel.Name != string.Empty)
+                {
+                    dataValidated = true;
+                }
+                else
+                {
+                    dataValidated = false;
+                }
+            }
         }
     }
 }

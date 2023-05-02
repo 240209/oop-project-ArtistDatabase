@@ -33,7 +33,7 @@
             </Grid.ColumnDefinitions>
 
             <Label Content="Name:"  Grid.Column="0"  VerticalAlignment="Center" Style="{StaticResource PropertyTitle}"/>
-            <TextBox Text="{Binding Name}" Grid.Column="1" VerticalAlignment="Center" Style="{StaticResource UserInput}"/>
+            <TextBox Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" VerticalAlignment="Center" Style="{StaticResource UserInput}"/>
         </Grid>
     </Grid>
 </UserControl>

@@ -4,7 +4,7 @@
 + .csv export
 + .csv import
 + documentation
-- data validation
++ data validation
 - sample database
 - error handling?
 
