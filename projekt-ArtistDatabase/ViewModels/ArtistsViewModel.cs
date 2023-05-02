@@ -15,6 +15,8 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using projekt_ArtistDatabase.Commands;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Immutable;
+using System.Windows.Controls;
+using System.Windows.Media;
 
 namespace projekt_ArtistDatabase.ViewModels
 {

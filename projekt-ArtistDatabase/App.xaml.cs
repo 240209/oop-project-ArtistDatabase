@@ -51,11 +51,13 @@ namespace projekt_ArtistDatabase
                 }
             };
 
-            // Sample data fill if database empty - WE HAVE .csv IMPORT/EXPORT
-            //if (!context.Artists.Any() || !context.Albums.Any() || !context.Genres.Any())
-            //{
-            //    DatabaseHandler.InsertSampleData();
-            //}
+            // Sample data fill
+            /*
+            if (!context.Artists.Any() || !context.Albums.Any() || !context.Genres.Any())
+            {
+                DatabaseHandler.InsertSampleData();
+            }
+            */
 
             // Show MainWindow, passing DataContext
             ArtistsViewModel = new ArtistsViewModel(context, _navigationStore);

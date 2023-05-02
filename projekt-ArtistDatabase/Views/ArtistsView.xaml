@@ -35,13 +35,13 @@
             </Grid>
 
             <Border Grid.Row="1" BorderThickness="2" BorderBrush="Black" Margin="5" CornerRadius="5" Padding="3">
-                <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+                <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
 
-                    <ListBox ItemsSource="{Binding ArtistsOutput}" BorderThickness="0"
+                    <ListBox ItemsSource="{Binding ArtistsOutput}" BorderThickness="0" Margin="5"
                          SelectedItem="{Binding SelectedArtist}">
                         <ListBox.ItemTemplate>
                             <DataTemplate>
-                                <TextBlock Text="{Binding Name}" FontSize="14" Margin="5 2" Padding="5 0"/>
+                                <TextBlock Text="{Binding Name}" FontSize="14" Margin="0 2" Padding="0"/>
                             </DataTemplate>
                         </ListBox.ItemTemplate>
                     </ListBox>
@@ -158,7 +158,7 @@
                                 <TextBlock Text="Add the first album!" FontSize="14" Margin="20 0" Padding="0"/>
                             </Grid>
 
-                            <ListBox BorderThickness="0" Margin="20 5 20 0" ItemsSource="{Binding SelectedArtistAlbums}"
+                            <ListBox BorderThickness="0" Margin="20 5 20 20" ItemsSource="{Binding SelectedArtistAlbums}"
                                 SelectedItem="{Binding SelectedArtistAlbum}">
                                 <ListBox.ItemTemplate>
                                     <DataTemplate>
