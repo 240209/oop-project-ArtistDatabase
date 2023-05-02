@@ -41,6 +41,7 @@ namespace projekt_ArtistDatabase.Commands
                 App.context.SaveChanges();
                 // Remove removed album from UI
                 _artistsViewModel.SelectedArtistGenres.Remove(selectedGenre);
+                _artistsViewModel.updateAlbumsGenresBooleans();
             }
             else
             {

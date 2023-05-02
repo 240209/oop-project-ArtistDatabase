@@ -193,6 +193,29 @@ namespace projekt_ArtistDatabase.ViewModels
             ImportCsvCommand = new ImportCsvCommand();
         }
 
+        public void updateAlbumsGenresBooleans()
+        {
+            if (SelectedArtistAlbums.Any())
+            {
+                hasSelectedArtistAlbums = true;
+            }
+            else
+            {
+                hasSelectedArtistAlbums = false;
+            }
+
+            if (SelectedArtistGenres.Any())
+            {
+                hasSelectedArtistGenres = true;
+            }
+            else
+            {
+                hasSelectedArtistGenres = false;
+            }
+            OnPropertyChanged(nameof(hasSelectedArtistAlbums));
+            OnPropertyChanged(nameof(hasSelectedArtistGenres));
+        }
+
         #region ICommands
         public ICommand SearchArtistsCommand { get; }
         public ICommand NewArtistCommand { get; }
